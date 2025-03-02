@@ -1,0 +1,57 @@
+name: Build, Restore, and Test with Code Coverage
+
+on:
+  push:
+    branches:
+      - main
+  release:
+    types:
+      - published  # Trigger when a release is published
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest # Use the latest Ubuntu runner
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x' # Use .NET 8.0 since your project targets net8.0
+
+      - name: Restore Dependencies
+        run: dotnet restore
+      
+      - name: Build Solution
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Run Unit Tests with Code Coverage
+        run: dotnet test --collect:"XPlat Code Coverage" --results-directory ./TestResults
+        env:
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+      
+      # Step 6: Locate and Upload the Coverage Report
+      - name: Find and Upload Code Coverage Results
+        run: |
+          # Find the coverage.cobertura.xml file no matter the GUID folder name
+          COVERAGE_FILE=$(find TestResults -name 'coverage.cobertura.xml' | head -n 1)
+          echo "Coverage report located at: $COVERAGE_FILE"
+          echo "COVERAGE_FILE_PATH=$COVERAGE_FILE" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Upload Code Coverage Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage
+          path: ${{ env.COVERAGE_FILE_PATH }}
+          
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ${{ env.COVERAGE_FILE_PATH }}
+          flags: unittests
+          name: CodeCoverageReport
+          fail_ci_if_error: false
