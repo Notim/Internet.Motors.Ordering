@@ -6,7 +6,7 @@ networks:
 
 services:
   zookeeper:
-    container_name: internet_motors_zookeeper
+    container_name: internet_motors_ordering_zookeeper
     image: confluentinc/cp-zookeeper:7.5.0
     ports:
       - "2181:2181"
@@ -18,7 +18,7 @@ services:
       - kafka_network
 
   kafka:
-    container_name: internet_motors_kafka
+    container_name: internet_motors_ordering_kafka
     image: confluentinc/cp-kafka:7.5.0
     ports:
       - "9092:9092"
@@ -35,7 +35,7 @@ services:
       - kafka_network
 
   init-kafka:
-    container_name: internet_motors_init_kafka
+    container_name: internet_motors_ordering_init_kafka
     image: confluentinc/cp-kafka:7.5.0
     depends_on:
       - kafka
@@ -62,7 +62,7 @@ services:
       - kafka_network
   
   kafdrop:
-    container_name: internet_motors_kafdrop
+    container_name: internet_motors_ordering_kafdrop
     image: obsidiandynamics/kafdrop:latest
     ports:
       - "9000:9000"
@@ -74,10 +74,10 @@ services:
       - kafka_network
 
   sqlserver:
-    container_name: internet_motors_sqlserver
+    container_name: internet_motors_ordering_sqlserver
     image: mcr.microsoft.com/mssql/server:2019-CU23-ubuntu-20.04
     ports:
-      - "1433:1433"
+      - "1434:1433"
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "Admin@12345"
@@ -95,10 +95,3 @@ services:
     networks:
       - kafka_network
   
-  redis:
-    container_name: internet_motors_redis
-    image: redis:7.0
-    ports:
-      - "6379:6379"
-    networks:
-      - kafka_network
