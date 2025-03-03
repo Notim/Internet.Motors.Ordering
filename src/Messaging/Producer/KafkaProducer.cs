@@ -3,7 +3,7 @@ using Confluent.Kafka;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Messaging.Producer;
+namespace Infrastructure.Messaging.Producer;
 
 public class MessageProducer<T> : IKafkaProducer<T>
 {

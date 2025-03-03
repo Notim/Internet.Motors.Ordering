@@ -33,7 +33,7 @@ public class CreateNewOrderCommandHandler : IRequestHandler<CreateNewOrderComman
         var order = request.MapToDomain();
         
         var orderId = await _orderRepository.InsertOrderAsync(order, cancellationToken);
-        if (orderId >= 0)
+        if (orderId == 0)
         {
             output.AddFault(new Fault(FaultType.GenericError, "Could not create order"));
             return output;

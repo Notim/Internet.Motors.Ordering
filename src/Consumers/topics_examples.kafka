@@ -1,0 +1,33 @@
+PRODUCER vehicle reserved event
+topic: car-reserved
+key: dbe6fa0c-68cc-4c37-924d-911a4452c49a
+headers: header1=value1, header2=value2
+{
+  "vehicleId": "dbe6fa0c-68cc-4c37-924d-911a4452c49a",
+  "orderId": "dbe6fa0c-68cc-4c37-924d-911a4452c49a",
+  "customerDocument": "4653451802",
+  "carName": "Volkwagen Fox 2.0 2022",
+  "price": 420000.53,
+  "orderedAt": "2023-01-01T00:00:00"
+}
+
+###
+
+PRODUCER payment expired event
+topic: payment-expired
+key: dbe6fa0c-68cc-4c37-924d-911a4452c49d
+headers: header1=value1, header2=value2
+{
+  "orderId": "dbe6fa0c-68cc-4c37-924d-911a4452c49d",
+  "reason": "payment not paid on max time"
+}
+
+###
+
+PRODUCER payment confirmed event
+topic: payment-confirmed
+key: 9d5f72e6-410e-4ac9-b7b4-23a386aa454f
+headers: header1=value1, header2=value2
+{
+  "orderId": "9d5f72e6-410e-4ac9-b7b4-23a386aa454f"
+}

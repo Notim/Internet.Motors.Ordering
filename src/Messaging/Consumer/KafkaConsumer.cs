@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Messaging.Consumer;
+namespace Infrastructure.Messaging.Consumer;
 
 public abstract class KafkaConsumer<T> : BackgroundService
 {
@@ -31,7 +31,7 @@ public abstract class KafkaConsumer<T> : BackgroundService
                 consumer.Subscribe(GetTopic());
                 
                 try
-                {   _logger.LogInformation("Background Service is starting.");
+                {   _logger.LogInformation("Background Service {Consumer} is starting.", this.GetType().Name);
                 
                     while (!stoppingToken.IsCancellationRequested)
                     {
@@ -57,8 +57,8 @@ public abstract class KafkaConsumer<T> : BackgroundService
                     
                         await Task.Delay(100, stoppingToken);
                     }
-                
-                    _logger.LogInformation("Background Service is stopping.");
+                    
+                    _logger.LogInformation("Background Service {Consumer} is stopping.", this.GetType().Name);
                 }
                 catch (OperationCanceledException ex)
                 {

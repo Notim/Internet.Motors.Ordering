@@ -89,7 +89,7 @@ services:
       - -c
       - |
         /opt/mssql/bin/sqlservr &
-        sleep 19
+        sleep 5
         /opt/mssql-tools/bin/sqlcmd -U sa -P Admin@12345 -l 30 -e -i /scripts/database_sql.sql
         sleep infinity
     networks:

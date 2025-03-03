@@ -1,4 +1,4 @@
-namespace Messaging;
+namespace Infrastructure.Messaging;
 
 public class Envelop<T>
 {

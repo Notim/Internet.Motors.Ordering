@@ -8,6 +8,8 @@
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
         <OutputType>Library</OutputType>
+        <AssemblyName>Infrastructure.Messaging</AssemblyName>
+        <RootNamespace>Infrastructure.Messaging</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
