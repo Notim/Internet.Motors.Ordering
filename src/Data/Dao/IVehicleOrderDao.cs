@@ -5,7 +5,7 @@ namespace Infrastructure.Data.Dao;
 public interface IVehicleOrderDao
 {
 
-    Task<VehicleOrderDto?> GetOrderByVehicleIdAsync(Guid vehicleId, CancellationToken cancellationToken);
+    Task<VehicleOrderDto?> GetOrderByVehicleIdAsync(Guid orderId, CancellationToken cancellationToken);
 
     Task<int> InsertVehicleOrderAsync(VehicleOrderDto dto, CancellationToken cancellationToken);
 

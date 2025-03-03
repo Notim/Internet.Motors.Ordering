@@ -17,14 +17,14 @@ public class VehicleOrderDao : IVehicleOrderDao
         _config = configOptions.Value;
     }
 
-    public async Task<VehicleOrderDto?> GetOrderByVehicleIdAsync(Guid vehicleId, CancellationToken cancellationToken)
+    public async Task<VehicleOrderDto?> GetOrderByVehicleIdAsync(Guid orderId, CancellationToken cancellationToken)
     {
         using var connection = CreateConnection();
         
         const string query = @"
             SELECT * 
             FROM VEHICLE_ORDER 
-            WHERE VehicleId = @VehicleId
+            WHERE OrderId = @OrderId
         ";
 
         return await connection.QueryFirstOrDefaultAsync<VehicleOrderDto>(
@@ -32,7 +32,7 @@ public class VehicleOrderDao : IVehicleOrderDao
                 query,
                 new
                 {
-                    VehicleId = vehicleId
+                    OrderId = orderId
                 },
                 cancellationToken: cancellationToken
             )
